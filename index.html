@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Créditos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" href="https://raw.githubusercontent.com/connectstore/appstore/refs/heads/main/fav.png" type="image/x-icon">
    <style>
         body {
@@ -106,13 +107,14 @@
             margin-bottom: 8px;
         }
 
-        .container {
+            .container {
             max-width: 500px;
             background-color: #ffffff;
             padding: 20px;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            margin-bottom: 50px;
         }
 
         .card {
@@ -260,6 +262,19 @@
             margin-top: 20px;
             margin-bottom: 10px;
         }
+        
+        .bottom-buttonfix {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      background: linear-gradient(90deg, #4E75AF, #4CAF50);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      border-radius: 8px;
+      z-index: 100;
+    }
 
         .cancel-button {
             background: linear-gradient(90deg, #E4003A, #C8013A);
@@ -291,43 +306,82 @@
         }
         
         .adcard {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .adcard img {
-            width: 50px;
-            height: 50px;
-        }
-        .adcard-content {
-            max-width: 80%;
-        }
-        .adcard-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333333;
-            margin-bottom: 5px;
-        }
-        .adcard-text {
-            font-size: 14px;
-            color: #666666;
-            margin-bottom: 5px;
-        }
-        .adcard-text strong {
-            color: #212121;
-        }
-        .adcard-text.green {
-        	font-size: 16px;
-            color: green;
-        }
-        .adhighlight-card {
-            background-color: #f5f5f5;
-            border-left: 5px solid #4CAF50;
-        }
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative; /* Adicionado para permitir o posicionamento absoluto do ícone */
+}
+
+.adcard img {
+    width: 50px;
+    height: 50px;
+}
+
+.adcard-content {
+    width: 100%;
+}
+
+.adcard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.adcard-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 5px;
+}
+
+.toggle-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #212121;
+    transition: transform 0.3s ease;
+    position: absolute;
+    top: 20px; /* Ajuste a posição do ícone */
+    right: 20px; /* Posiciona no canto superior direito */
+}
+
+.adcard.expanded .toggle-icon {
+    transform: rotate(180deg); /* Rotaciona a seta quando expandido */
+}
+
+.adcard-text {
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: all 0.3s ease;
+}
+
+.adcard.expanded .adcard-text {
+    white-space: normal;
+    text-overflow: unset;
+}
+
+.adcard-text strong {
+    color: #212121;
+}
+
+.adcard-text.green {
+    font-size: 16px;
+    color: green;
+}
+
+.adhighlight-card {
+    background-color: #f5f5f5;
+    border-left: 5px solid #4CAF50;
+}
        
        .highlightblackfriday {
             background: linear-gradient(90deg, #4E75AF, #4E75AF);
@@ -361,21 +415,23 @@
    
     <div class="container">
     
-    <!-- Anúncio
     <div class="adcard adhighlight-card">
-    <div class="adcard-content">
-     <div class="adcard-title">
-      Tá on?
-     </div>
-     <div class="adcard-text">
-      O Connect sim! E hoje você tem TAXA ZERO em Gift Cards acima de R$ 80 🚀
-     </div>
-     <div class="adcard-text green">
-      A oferta TÁ ON para você! 
-     </div>
+  <div class="adcard-content">
+    <div class="adcard-header">
+      <div class="adcard-title">
+        Seu saldo, suas regras! 👾
+      </div>
     </div>
-   </div>
-   Anúncio -->
+    <!-- Ícone de seta para expandir/contrair, posicionado no canto superior direito -->
+    <button class="toggle-icon" onclick="toggleCard(this)">
+      <i class="fas fa-chevron-down"></i> <!-- Ícone de seta para baixo -->
+    </button>
+    <div class="adcard-text">
+      Use seu saldo para muito mais: compre apps, desbloqueie itens em jogos, assine seus serviços favoritos e amplie seu espaço no iCloud!
+    </div>
+  </div>
+</div>
+
   
         <div class="subtitle">Selecione o valor do cartão pré-pago</div>
 
@@ -396,13 +452,11 @@
         <input type="radio" name="value" id="value80" value="80">
         <label for="value80" class="value">R$ 80</label>
     </div>
-    
-    <!-- Anúncio
     <div class="card" onclick="selectCard('value100')">
         <input type="radio" name="value" id="value100" value="100">
         <label for="value100" class="value">R$ 100</label>
     </div>
-    -->
+    
 
 <div class="popup" id="paymentPopup">
     <div class="summary">Valor final do pedido</div>
@@ -412,7 +466,7 @@
     <button class="button cancel-button" id="cancelButton">CANCELAR PEDIDO</button>
 </div>
 
-<button class="button bottom-button" id="continueButton">CONTINUAR</button>
+<button class="button bottom-buttonfix" id="continueButton">CONTINUAR</button>
 
 </div>
 <script>
@@ -486,6 +540,11 @@
     var checkoutUrl = "https://connectstore.github.io/checkout?payment=" + total + "&product=" + encodeURIComponent(product) + "&price=" + selectedValue;
     window.location.href = checkoutUrl;
 });
+
+function toggleCard(button) {
+  const card = button.closest('.adcard');
+  card.classList.toggle('expanded');
+}
     </script>
 </body>
 </html>
